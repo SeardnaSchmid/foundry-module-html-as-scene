@@ -1,0 +1,19 @@
+{{!--
+  Scene sheet tab. Field names are plain scene flags so the form submits
+  through Foundry's normal SceneConfig update without extra handling.
+
+  SCAFFOLD — markup outline; classes/structure follow Foundry's sheet styling.
+--}}
+<div class="tab" data-tab="html-as-scene" data-group="main">
+
+  {{!-- enabled: master switch for this scene --}}
+  {{!-- url: absolute URL or a path relative to the Foundry origin --}}
+  {{!-- interactive: whether clicks reach the page or fall through to the canvas --}}
+  {{!-- allowPlayers: show the overlay to non-GM users --}}
+  {{!-- hideCanvas: cover the canvas completely instead of layering over it --}}
+
+  {{!-- TODO: form-group per flag, name="flags.html-as-scene.<key>" --}}
+  {{!-- TODO: notes paragraph explaining relative paths, e.g.
+             modules/html-as-scene/dist/index.html --}}
+
+</div>

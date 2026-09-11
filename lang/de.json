@@ -1,0 +1,30 @@
+{
+  "html-as-scene": {
+    "overlay": {
+      "title": "Eingebettete Seite"
+    },
+    "sceneConfig": {
+      "tab": "HTML",
+      "enabled": { "label": "HTML-Overlay anzeigen", "hint": "" },
+      "url": { "label": "Seiten-URL", "hint": "" },
+      "interactive": { "label": "Interaktiv", "hint": "" },
+      "allowPlayers": { "label": "Für Spieler sichtbar", "hint": "" },
+      "hideCanvas": { "label": "Canvas verbergen", "hint": "" }
+    },
+    "settings": {
+      "allowedOrigins": { "name": "Erlaubte Origins", "hint": "" },
+      "sandbox": { "name": "Iframe-Sandbox", "hint": "" },
+      "zIndex": { "name": "Z-Index des Overlays", "hint": "" },
+      "debug": { "name": "Debug-Protokoll", "hint": "" }
+    },
+    "context": {
+      "reload": "Eingebettete Seite neu laden"
+    },
+    "keybindings": {
+      "toggle": { "name": "Overlay aus-/einblenden" }
+    },
+    "notifications": {
+      "invalidUrl": "Das ist keine gültige URL."
+    }
+  }
+}

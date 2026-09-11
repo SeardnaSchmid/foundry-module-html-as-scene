@@ -1,0 +1,77 @@
+# Baut das Modul und veröffentlicht es als GitHub-Release.
+#
+# Aufbau übernommen aus foundry-joster-system/.github/workflows/release.yml:
+# Tag-getrieben, die Version kommt aus dem Tag, das Manifest wird vor dem
+# Packen auf die Release-URLs umgeschrieben.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Derive version from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Update module.json for this release
+        run: |
+          REPO="${{ github.repository }}"
+          TAG="${{ steps.version.outputs.tag }}"
+          VERSION="${{ steps.version.outputs.version }}"
+          jq --arg version "$VERSION" \
+             --arg manifest "https://github.com/${REPO}/releases/latest/download/module.json" \
+             --arg download "https://github.com/${REPO}/releases/download/${TAG}/module.zip" \
+             '.version = $version | .manifest = $manifest | .download = $download' \
+             module.json > module.json.tmp
+          mv module.json.tmp module.json
+
+      # Prüft, dass jede im Manifest genannte Datei auch wirklich im Paket
+      # liegt — sonst installiert Foundry ein Modul, das beim Start scheitert.
+      # Reines Node ohne Abhängigkeiten, deshalb kein npm ci davor.
+      - name: Verify manifest
+        run: node tools/check-manifest.mjs
+
+      - name: Run tests
+        run: node --test
+
+      - name: Package release zip
+        run: |
+          zip -r module.zip \
+            module.json \
+            scripts \
+            styles \
+            templates \
+            lang \
+            LICENSE \
+            README.md \
+            CHANGELOG.md
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          files: |
+            module.json
+            module.zip
+          generate_release_notes: true

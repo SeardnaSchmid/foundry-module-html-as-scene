@@ -1,0 +1,4 @@
+dist/
+module.zip
+node_modules/
+*.log

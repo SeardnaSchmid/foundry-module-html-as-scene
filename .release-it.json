@@ -1,0 +1,35 @@
+{
+  "$comment": [
+    "Übernommen aus foundry-joster-system/.release-it.json.",
+    "Gebumpt wird module.json statt system.json; release-it erzeugt nur Commit",
+    "und Tag — das Release baut die CI (.github/workflows/release.yml)."
+  ],
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}",
+    "tagAnnotation": "html-as-scene v${version}",
+    "push": true
+  },
+  "github": {
+    "release": false
+  },
+  "npm": {
+    "publish": false
+  },
+  "plugins": {
+    "@release-it/bumper": {
+      "out": [
+        { "file": "module.json", "path": "version" },
+        { "file": "package.json", "path": "version" }
+      ]
+    },
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    }
+  },
+  "hooks": {
+    "before:init": "npm run release:verify",
+    "after:bump": "sed -i 's|/releases/download/v[0-9.]*/module.zip|/releases/download/v${version}/module.zip|' module.json"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "html-as-scene": {
+    "overlay": {
+      "title": "Embedded page"
+    },
+    "sceneConfig": {
+      "tab": "HTML",
+      "enabled": { "label": "Show HTML overlay", "hint": "" },
+      "url": { "label": "Page URL", "hint": "" },
+      "interactive": { "label": "Interactive", "hint": "" },
+      "allowPlayers": { "label": "Visible to players", "hint": "" },
+      "hideCanvas": { "label": "Hide canvas", "hint": "" }
+    },
+    "settings": {
+      "allowedOrigins": { "name": "Allowed origins", "hint": "" },
+      "sandbox": { "name": "Iframe sandbox", "hint": "" },
+      "zIndex": { "name": "Overlay z-index", "hint": "" },
+      "debug": { "name": "Debug logging", "hint": "" }
+    },
+    "context": {
+      "reload": "Reload embedded page"
+    },
+    "keybindings": {
+      "toggle": { "name": "Hide/show the overlay" }
+    },
+    "notifications": {
+      "invalidUrl": "That is not a valid URL."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "html-as-scene",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Foundry-VTT-Modul: HTML-Seite als Szenen-Overlay.",
+  "author": "Andreas Schmid",
+  "license": "MIT",
+  "scripts": {
+    "check": "node tools/check-manifest.mjs",
+    "test": "node --test",
+    "package": "node tools/package.mjs",
+    "link": "node tools/link-foundry.mjs",
+    "serve": "node tools/serve-foundry.mjs",
+    "release:verify": "npm run check",
+    "release": "npm run release:verify && release-it"
+  },
+  "devDependencies": {
+    "@release-it/bumper": "^7.0.6",
+    "@release-it/conventional-changelog": "^11.0.1",
+    "release-it": "^20.2.1"
+  }
+}
