@@ -1,6 +1,6 @@
 import { CORE_SETTINGS, MODULE_ID } from "./constants.mjs";
 import { HtmlAsSceneOverlay } from "./overlay.mjs";
-import { sceneConfigChanged } from "./scene-config.mjs";
+import { sceneConfigChanged, sceneSnapshotChanged } from "./scene-config.mjs";
 import { HtmlSceneConfig } from "./scene-flags.mjs";
 
 const overlay = new HtmlAsSceneOverlay();
@@ -18,6 +18,7 @@ export async function syncOverlay() {
   }
 }
 
-export function syncOverlayForSceneUpdate(_scene, changed) {
+export function syncOverlayForSceneUpdate(scene, changed) {
   if ( sceneConfigChanged(changed) ) void syncOverlay();
+  else if ( sceneSnapshotChanged(changed) ) overlay.updateSnapshot(scene);
 }

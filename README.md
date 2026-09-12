@@ -13,6 +13,8 @@ funktionieren weiter. Zielplattform ist ausschließlich Foundry VTT 14.
 - interaktive Seite oder durchgereichte Zeigereingaben zum Canvas
 - optional ausgeblendeter Canvas zur Reduktion der Renderlast
 - strikte Sandbox als Standard und ausdrücklich bestätigter Vertrauensmodus
+- optionale Snapshot-Brücke für lokale Arbeitsstände und auf der Szene
+  veröffentlichte Spieleransichten
 - Unterstützung für Foundrys Einstellung **Canvas deaktivieren**
 
 Die Konfiguration liegt unter `flags["html-as-scene"].config` an der Szene und
@@ -37,13 +39,44 @@ daher direkt im Data-Verzeichnis ab. Für eine mit dem Modul gepackte Seite kann
 beispielsweise `dist/index.html` verwendet werden; `dist/` ist absichtlich nicht
 Teil des veröffentlichten Moduls.
 
+## Snapshot-Brücke
+
+Die optionale **Foundry-Snapshot-Brücke** ist für selbst kontrollierte,
+zustandsbehaftete Einzelseiten gedacht. Bei aktivierter Brücke ruft das Modul
+auch eine externe HTML-Datei selbst ab und bettet sie als `srcdoc` ein. Externe
+Server müssen den Abruf per CORS erlauben. Im Feld **Lokaler
+Speicherschlüssel** steht der `localStorage`-Schlüssel des Arbeitsdokuments.
+
+Die Seite erhält vor ihrem eigenen JavaScript `window.htmlAsScene`:
+
+```js
+const bridge = window.htmlAsScene;
+const document = bridge.mode === "player"
+  ? bridge.snapshot
+  : bridge.storage.load();
+
+await bridge.storage.save(document); // lokaler Browser-Arbeitsstand
+await bridge.publish(document);      // Snapshot am Foundry-Scene-Dokument
+bridge.onSnapshot((snapshot) => {}); // Live-Aktualisierung für Spieler
+```
+
+`mode` ist `"gm"` oder `"player"`. Der lokale Arbeitsstand bleibt bewusst an
+den Browser gebunden. `publish` legt dagegen eine JSON-Kopie unter
+`flags["html-as-scene"].snapshot` an der Szene ab; Foundry persistiert und
+synchronisiert sie. Die Seite entscheidet selbst, welche Teile ihres Zustands
+sie veröffentlicht und wie stark ihre Spieleransicht eingeschränkt ist.
+
+Die Brücke ist kein Sicherheitsfilter. Foundry-Dokumentrechte gelten weiterhin,
+aber eine eingebettete Seite sollte nur Daten veröffentlichen, die alle Benutzer
+der Szene erhalten dürfen.
+
 ## Sicherheit
 
 **Strikte Sandbox** ist die Voreinstellung. Scripts, Formulare und Popups
 funktionieren, die Seite erhält aber einen undurchsichtigen Origin und kann
 nicht auf Foundrys DOM, Sitzung oder `window.parent.game` zugreifen.
 
-**Vertrauenswürdig** entfernt die Sandbox. Bei einer lokalen `srcdoc`-Seite ist
+**Vertrauenswürdig** entfernt die Sandbox. Bei einer `srcdoc`-Seite ist
 das voller Zugriff auf Foundry. Diesen Modus nur für selbst kontrolliertes HTML
 verwenden. Der Szenendialog verlangt beim Auswählen eine Bestätigung. Eine
 Änderung des Vertrauensmodus lädt die Seite neu, damit die neue Sandbox wirklich
@@ -72,10 +105,10 @@ ApplicationV2 stellt zusätzlich `renderHtmlAsSceneOverlay` und
 
 ## Bewusste Nicht-Ziele
 
-Das Modul versteckt oder verschiebt Foundrys Oberfläche nicht, injiziert keine
-Foundry-API in die Seite und bietet keine Socket-, `postMessage`-, Makro- oder
-automatische Reload-Schnittstelle. Diese Funktionen benötigen ein eigenes
-Sicherheits- und API-Design und gehören nicht zum ersten Release.
+Das Modul versteckt oder verschiebt Foundrys Oberfläche nicht und injiziert
+keine allgemeine Foundry-API. Die Snapshot-Brücke beschränkt sich auf einen
+konfigurierten lokalen JSON-Arbeitsstand und einen JSON-Snapshot an der Szene;
+eine Makro-, Socket- oder Dokument-API gehört nicht dazu.
 
 ## Entwickeln
 

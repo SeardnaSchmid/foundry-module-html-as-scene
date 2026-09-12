@@ -14,6 +14,14 @@
         "label": "Seiten-URL",
         "hint": "Externe HTTP(S)-URL oder von Foundry ausgelieferter Pfad, zum Beispiel modules/html-as-scene/dist/index.html."
       },
+      "bridge": {
+        "label": "Foundry-Snapshot-Brücke",
+        "hint": "Ruft die HTML-Datei ab, bettet sie als srcdoc ein und stellt ihr lokalen Arbeitsstand sowie den an dieser Szene veröffentlichten Snapshot bereit. Externe Seiten müssen CORS-Abrufe erlauben."
+      },
+      "storageKey": {
+        "label": "Lokaler Speicherschlüssel",
+        "hint": "Browser-localStorage-Schlüssel für den Arbeitsstand dieser Seite, zum Beispiel navigationstisch.orbit.v1. Der veröffentlichte Snapshot liegt unabhängig davon auf dem Foundry-Server."
+      },
       "hideBoard": {
         "label": "Board nicht rendern",
         "hint": "Blendet den Foundry-Canvas aus, solange die Seite sichtbar ist, und reduziert so die Renderlast."
@@ -53,6 +61,7 @@
       "localUnreachable": "Foundry konnte diesen lokalen Pfad nicht prüfen. Du kannst ihn speichern, solltest ihn aber vor Verwendung der Szene kontrollieren."
     },
     "notifications": {
+      "bridgeFetchFailed": "HTML als Szene konnte die externe Seite für die Snapshot-Brücke nicht abrufen: {url}. Die Seite muss CORS-Abrufe erlauben.",
       "localLoadFailed": "HTML als Szene konnte die lokale Seite nicht laden: {url}",
       "loadTimeout": "Die Seite wurde nicht vollständig geladen: {url}. Sie ist möglicherweise nicht erreichbar oder verbietet die Einbettung per X-Frame-Options beziehungsweise Content-Security-Policy."
     }

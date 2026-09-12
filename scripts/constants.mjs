@@ -2,8 +2,12 @@ export const MODULE_ID = "html-as-scene";
 
 export const FLAGS = Object.freeze({
   CONFIG: "config",
+  SNAPSHOT: "snapshot",
   ROOT: `flags.${MODULE_ID}`,
-  DELETED_ROOT: `flags.-=${MODULE_ID}`
+  CONFIG_ROOT: `flags.${MODULE_ID}.config`,
+  SNAPSHOT_ROOT: `flags.${MODULE_ID}.snapshot`,
+  DELETED_ROOT: `flags.-=${MODULE_ID}`,
+  DELETED_SNAPSHOT_ROOT: `flags.${MODULE_ID}.-=snapshot`
 });
 
 export const DOM_IDS = Object.freeze({
@@ -27,12 +31,27 @@ export const CSS_CLASSES = Object.freeze({
 export const CONFIG_KEYS = Object.freeze([
   "enabled",
   "url",
+  "bridge",
+  "storageKey",
   "hideBoard",
   "trust",
   "stacking",
   "interactive",
   "audience"
 ]);
+
+export const BRIDGE = Object.freeze({
+  CHANNEL: `${MODULE_ID}.bridge.v1`,
+  GLOBAL: "htmlAsScene",
+  REQUEST_TIMEOUT_MS: 10_000,
+  TYPES: Object.freeze({
+    PUBLISH: "snapshot:publish",
+    RESPONSE: "response",
+    SNAPSHOT: "snapshot:update",
+    STORAGE_CLEAR: "storage:clear",
+    STORAGE_SET: "storage:set"
+  })
+});
 
 export const TRUST = Object.freeze({
   STRICT: "strict",
@@ -67,6 +86,7 @@ export const SCENE_CONFIG = Object.freeze({
 });
 
 export const I18N = Object.freeze({
+  BRIDGE_FETCH_FAILED: `${MODULE_ID}.notifications.bridgeFetchFailed`,
   INVALID_URL: `${MODULE_ID}.validation.invalidUrl`,
   LOAD_TIMEOUT: `${MODULE_ID}.notifications.loadTimeout`,
   LOCAL_LOAD_FAILED: `${MODULE_ID}.notifications.localLoadFailed`,

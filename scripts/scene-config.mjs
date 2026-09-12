@@ -43,12 +43,15 @@ export function enhanceSceneConfig(app, element) {
   }
 
   const enabled = fields.get("enabled");
+  const bridge = fields.get("bridge");
   const updateDisabledState = () => {
     for ( const [key, control] of fields ) {
-      if ( key !== "enabled" ) control.disabled = !enabled.checked;
+      if ( key === "enabled" ) continue;
+      control.disabled = !enabled.checked || (key === "storageKey" && !bridge.checked);
     }
   };
   enabled.addEventListener("change", updateDisabledState);
+  bridge.addEventListener("change", updateDisabledState);
   updateDisabledState();
 
   const trust = fields.get("trust");
@@ -105,7 +108,13 @@ export function enhanceSceneConfig(app, element) {
 }
 
 export function sceneConfigChanged(changed) {
-  return foundry.utils.hasProperty(changed, FLAGS.ROOT)
+  return foundry.utils.hasProperty(changed, FLAGS.CONFIG_ROOT)
     || foundry.utils.hasProperty(changed, FLAGS.DELETED_ROOT)
     || Object.hasOwn(changed, "active");
+}
+
+export function sceneSnapshotChanged(changed) {
+  return foundry.utils.hasProperty(changed, FLAGS.SNAPSHOT_ROOT)
+    || foundry.utils.hasProperty(changed, FLAGS.DELETED_SNAPSHOT_ROOT)
+    || foundry.utils.hasProperty(changed, FLAGS.DELETED_ROOT);
 }

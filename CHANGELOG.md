@@ -13,6 +13,8 @@
 * implement HTML scene webviews ([05e43c7](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/commit/05e43c7cd82914b09243007b773c8156c5e9bcb0))
 
 ## [Unreleased]
+- Optionale Snapshot-Brücke für eingebettete Seiten: lokaler Browser-Arbeitsstand,
+  serverseitiger Szenen-Snapshot und Live-Aktualisierung ohne Seiten-Reload.
 - Vollständige Szenen-Webansicht mit v14-Szenenreiter, Zielgruppen,
   Stapelung, Pointer-Modus, Canvas-Abschaltung und Lifecycle für Canvas- sowie
   No-Canvas-Welten.

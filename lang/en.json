@@ -14,6 +14,14 @@
         "label": "Page URL",
         "hint": "Enter an external HTTP(S) URL or a path served by Foundry, such as modules/html-as-scene/dist/index.html."
       },
+      "bridge": {
+        "label": "Foundry snapshot bridge",
+        "hint": "Fetch the HTML file, embed it as srcdoc, and expose the local working document plus the snapshot published on this scene. External pages must allow CORS requests."
+      },
+      "storageKey": {
+        "label": "Local storage key",
+        "hint": "Browser localStorage key used for this page's working document, such as navigationstisch.orbit.v1. The published snapshot is stored separately on the Foundry server."
+      },
       "hideBoard": {
         "label": "Stop rendering the board",
         "hint": "Hide the Foundry canvas while the page is visible to reduce rendering work."
@@ -53,6 +61,7 @@
       "localUnreachable": "Foundry could not check this local path. You may still save it, but verify the path before using the scene."
     },
     "notifications": {
+      "bridgeFetchFailed": "HTML as Scene could not fetch the external page for the snapshot bridge: {url}. The page must allow CORS requests.",
       "localLoadFailed": "HTML as Scene could not load the local page: {url}",
       "loadTimeout": "The page did not finish loading: {url}. It may be unavailable or may forbid iframe embedding through X-Frame-Options or Content-Security-Policy."
     }

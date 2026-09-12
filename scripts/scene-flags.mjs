@@ -25,6 +25,8 @@ export class HtmlSceneConfig extends foundry.abstract.DataModel {
     return {
       enabled: new BooleanField({ initial: false }),
       url: new StringField({ required: true, blank: true, initial: "" }),
+      bridge: new BooleanField({ initial: false }),
+      storageKey: new StringField({ required: true, blank: true, initial: "" }),
       hideBoard: new BooleanField({ initial: true }),
       trust: new StringField({ initial: TRUST.STRICT, choices: Object.values(TRUST) }),
       stacking: new StringField({ initial: STACKING.BELOW, choices: Object.values(STACKING) }),
@@ -62,6 +64,6 @@ export class HtmlSceneConfig extends foundry.abstract.DataModel {
   }
 
   get renderKey() {
-    return `${this.trust}\u0000${this.external ? "external" : "local"}\u0000${this.src}`;
+    return `${this.trust}\u0000${this.external ? "external" : "local"}\u0000${this.src}\u0000${this.bridge}\u0000${this.storageKey}`;
   }
 }
