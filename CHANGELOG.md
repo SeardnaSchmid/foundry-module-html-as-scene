@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.2.0](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/compare/v0.1.0...v0.2.0) (2026-09-12)
+
+
+### Features
+
+* add scene snapshot bridge ([5947293](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/commit/5947293bed3eaed4a86b5343e46ffeaea69a4ad2))
+
 # 0.1.0 (2026-09-12)
 
 
