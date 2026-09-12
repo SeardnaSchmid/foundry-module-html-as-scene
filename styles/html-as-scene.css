@@ -6,10 +6,6 @@
     overflow: hidden;
   }
 
-  .html-as-scene-overlay.above-ui {
-    z-index: 80;
-  }
-
   .html-as-scene-overlay.passive {
     pointer-events: none;
   }

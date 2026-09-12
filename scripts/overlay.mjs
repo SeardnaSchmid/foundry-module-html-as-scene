@@ -7,8 +7,7 @@ import {
   I18N,
   LOAD_TIMEOUT_MS,
   MODULE_ID,
-  SANDBOX,
-  STACKING
+  SANDBOX
 } from "./constants.mjs";
 import { injectBridge, parseStoredValue } from "./bridge.mjs";
 
@@ -174,7 +173,6 @@ export class HtmlAsSceneOverlay extends foundry.applications.api.ApplicationV2 {
 
   #applyElementState(config) {
     if ( !config || !this.element ) return;
-    this.element.classList.toggle(CSS_CLASSES.ABOVE_UI, config.stacking === STACKING.ABOVE);
     this.element.classList.toggle(CSS_CLASSES.PASSIVE, !config.interactive);
   }
 

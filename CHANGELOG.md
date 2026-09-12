@@ -20,10 +20,12 @@
 * implement HTML scene webviews ([05e43c7](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/commit/05e43c7cd82914b09243007b773c8156c5e9bcb0))
 
 ## [Unreleased]
+- Die Option, HTML über Foundrys Bedienelemente zu legen, wurde entfernt;
+  gespeicherte Altwerte werden ignoriert und die Oberfläche bleibt erreichbar.
 - Optionale Snapshot-Brücke für eingebettete Seiten: lokaler Browser-Arbeitsstand,
   serverseitiger Szenen-Snapshot und Live-Aktualisierung ohne Seiten-Reload.
 - Vollständige Szenen-Webansicht mit v14-Szenenreiter, Zielgruppen,
-  Stapelung, Pointer-Modus, Canvas-Abschaltung und Lifecycle für Canvas- sowie
+  Pointer-Modus, Canvas-Abschaltung und Lifecycle für Canvas- sowie
   No-Canvas-Welten.
 - Externe URLs und lokale HTML-Seiten über `srcdoc`, inklusive relativer Assets,
   strikter Sandbox, bestätigtem Vertrauensmodus und Lade-/Pfadwarnungen.

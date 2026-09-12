@@ -9,7 +9,7 @@ funktionieren weiter. Zielplattform ist ausschließlich Foundry VTT 14.
 - Konfiguration direkt im zusätzlichen Reiter **HTML** der Szeneneinstellungen
 - externe HTTP(S)-Seiten und lokale HTML-Dateien unter Foundrys Data-Pfad
 - Zielgruppe: alle, nur Spielleitung oder nur Spieler
-- Foundry-Bedienelemente wahlweise über oder unter der Seite
+- Foundry-Bedienelemente bleiben immer erreichbar über der Seite
 - interaktive Seite oder durchgereichte Zeigereingaben zum Canvas
 - optional ausgeblendeter Canvas zur Reduktion der Renderlast
 - strikte Sandbox als Standard und ausdrücklich bestätigter Vertrauensmodus

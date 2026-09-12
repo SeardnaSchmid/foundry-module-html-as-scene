@@ -32,12 +32,6 @@
         "strict": "Strikte Sandbox",
         "trusted": "Vertrauenswürdig (ohne Sandbox)"
       },
-      "stacking": {
-        "label": "Foundry-Oberfläche",
-        "hint": "Foundrys Bedienelemente können über der Seite bleiben oder von ihr verdeckt werden; Fenster bleiben erreichbar.",
-        "below": "Bedienelemente über der Seite",
-        "above": "Seite über den Bedienelementen"
-      },
       "interactive": {
         "label": "Interaktiv",
         "hint": "Wenn deaktiviert, werden Zeigereingaben durch die Seite an den Foundry-Canvas weitergegeben."

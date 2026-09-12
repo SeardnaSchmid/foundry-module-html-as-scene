@@ -1,4 +1,4 @@
-import { AUDIENCE, FLAGS, MODULE_ID, STACKING, TRUST } from "./constants.mjs";
+import { AUDIENCE, FLAGS, MODULE_ID, TRUST } from "./constants.mjs";
 
 const { BooleanField, StringField } = foundry.data.fields;
 
@@ -29,7 +29,6 @@ export class HtmlSceneConfig extends foundry.abstract.DataModel {
       storageKey: new StringField({ required: true, blank: true, initial: "" }),
       hideBoard: new BooleanField({ initial: true }),
       trust: new StringField({ initial: TRUST.STRICT, choices: Object.values(TRUST) }),
-      stacking: new StringField({ initial: STACKING.BELOW, choices: Object.values(STACKING) }),
       interactive: new BooleanField({ initial: true }),
       audience: new StringField({ initial: AUDIENCE.ALL, choices: Object.values(AUDIENCE) })
     };

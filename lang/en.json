@@ -32,12 +32,6 @@
         "strict": "Strict sandbox",
         "trusted": "Trusted (no sandbox)"
       },
-      "stacking": {
-        "label": "Foundry interface",
-        "hint": "Keep the Foundry controls above the page, or let the page cover them while leaving windows accessible.",
-        "below": "Controls above page",
-        "above": "Page above controls"
-      },
       "interactive": {
         "label": "Interactive",
         "hint": "When disabled, pointer input passes through the page to the Foundry canvas."

@@ -21,7 +21,6 @@ export const CORE_SETTINGS = Object.freeze({
 });
 
 export const CSS_CLASSES = Object.freeze({
-  ABOVE_UI: "above-ui",
   ACTIVE: "html-as-scene-active",
   BOARD_HIDDEN: "html-as-scene-board-hidden",
   OVERLAY: "html-as-scene-overlay",
@@ -35,7 +34,6 @@ export const CONFIG_KEYS = Object.freeze([
   "storageKey",
   "hideBoard",
   "trust",
-  "stacking",
   "interactive",
   "audience"
 ]);
@@ -56,11 +54,6 @@ export const BRIDGE = Object.freeze({
 export const TRUST = Object.freeze({
   STRICT: "strict",
   TRUSTED: "trusted"
-});
-
-export const STACKING = Object.freeze({
-  BELOW: "below",
-  ABOVE: "above"
 });
 
 export const AUDIENCE = Object.freeze({
