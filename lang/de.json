@@ -1,30 +1,60 @@
 {
   "html-as-scene": {
     "overlay": {
-      "title": "Eingebettete Seite"
+      "title": "Eingebettete Szenenseite"
     },
     "sceneConfig": {
       "tab": "HTML",
-      "enabled": { "label": "HTML-Overlay anzeigen", "hint": "" },
-      "url": { "label": "Seiten-URL", "hint": "" },
-      "interactive": { "label": "Interaktiv", "hint": "" },
-      "allowPlayers": { "label": "Für Spieler sichtbar", "hint": "" },
-      "hideCanvas": { "label": "Canvas verbergen", "hint": "" }
+      "legend": "HTML als Szene",
+      "enabled": {
+        "label": "HTML-Seite anzeigen",
+        "hint": "Ersetzt für die gewählte Zielgruppe die Kartenansicht durch diese Seite."
+      },
+      "url": {
+        "label": "Seiten-URL",
+        "hint": "Externe HTTP(S)-URL oder von Foundry ausgelieferter Pfad, zum Beispiel modules/html-as-scene/dist/index.html."
+      },
+      "hideBoard": {
+        "label": "Board nicht rendern",
+        "hint": "Blendet den Foundry-Canvas aus, solange die Seite sichtbar ist, und reduziert so die Renderlast."
+      },
+      "trust": {
+        "label": "Vertrauen",
+        "hint": "Strikt isoliert die Seite von Foundry. Vertrauenswürdig entfernt die Iframe-Sandbox vollständig.",
+        "strict": "Strikte Sandbox",
+        "trusted": "Vertrauenswürdig (ohne Sandbox)"
+      },
+      "stacking": {
+        "label": "Foundry-Oberfläche",
+        "hint": "Foundrys Bedienelemente können über der Seite bleiben oder von ihr verdeckt werden; Fenster bleiben erreichbar.",
+        "below": "Bedienelemente über der Seite",
+        "above": "Seite über den Bedienelementen"
+      },
+      "interactive": {
+        "label": "Interaktiv",
+        "hint": "Wenn deaktiviert, werden Zeigereingaben durch die Seite an den Foundry-Canvas weitergegeben."
+      },
+      "audience": {
+        "label": "Zielgruppe",
+        "hint": "Legt fest, welche verbundenen Benutzer die Seite sehen.",
+        "all": "Alle",
+        "gm": "Nur Spielleitung",
+        "players": "Nur Spieler"
+      }
     },
-    "settings": {
-      "allowedOrigins": { "name": "Erlaubte Origins", "hint": "" },
-      "sandbox": { "name": "Iframe-Sandbox", "hint": "" },
-      "zIndex": { "name": "Z-Index des Overlays", "hint": "" },
-      "debug": { "name": "Debug-Protokoll", "hint": "" }
+    "trust": {
+      "confirmTitle": "Dieser Seite vertrauen?",
+      "confirmContent": "Vertrauenswürdige Seiten laufen ohne Sandbox. Eine Seite vom selben Origin kann auf deine Foundry-Sitzung und die umgebende Seite zugreifen. Fahre nur mit eigenem, kontrolliertem HTML fort."
     },
-    "context": {
-      "reload": "Eingebettete Seite neu laden"
-    },
-    "keybindings": {
-      "toggle": { "name": "Overlay aus-/einblenden" }
+    "validation": {
+      "invalidUrl": "Dies ist keine gültige HTTP(S)-URL.",
+      "mixedContent": "Diese HTTP-Seite wird blockiert, wenn Foundry über HTTPS läuft. Verwende stattdessen HTTPS.",
+      "localMissing": "Foundry konnte diesen lokalen Pfad nicht finden (HTTP {status}). Du kannst ihn speichern, die Seite wird jedoch nicht geladen.",
+      "localUnreachable": "Foundry konnte diesen lokalen Pfad nicht prüfen. Du kannst ihn speichern, solltest ihn aber vor Verwendung der Szene kontrollieren."
     },
     "notifications": {
-      "invalidUrl": "Das ist keine gültige URL."
+      "localLoadFailed": "HTML als Szene konnte die lokale Seite nicht laden: {url}",
+      "loadTimeout": "Die Seite wurde nicht vollständig geladen: {url}. Sie ist möglicherweise nicht erreichbar oder verbietet die Einbettung per X-Frame-Options beziehungsweise Content-Security-Policy."
     }
   }
 }

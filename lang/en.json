@@ -1,30 +1,60 @@
 {
   "html-as-scene": {
     "overlay": {
-      "title": "Embedded page"
+      "title": "Embedded scene page"
     },
     "sceneConfig": {
       "tab": "HTML",
-      "enabled": { "label": "Show HTML overlay", "hint": "" },
-      "url": { "label": "Page URL", "hint": "" },
-      "interactive": { "label": "Interactive", "hint": "" },
-      "allowPlayers": { "label": "Visible to players", "hint": "" },
-      "hideCanvas": { "label": "Hide canvas", "hint": "" }
+      "legend": "HTML as Scene",
+      "enabled": {
+        "label": "Show HTML page",
+        "hint": "Replace the map view with this page for the selected audience."
+      },
+      "url": {
+        "label": "Page URL",
+        "hint": "Enter an external HTTP(S) URL or a path served by Foundry, such as modules/html-as-scene/dist/index.html."
+      },
+      "hideBoard": {
+        "label": "Stop rendering the board",
+        "hint": "Hide the Foundry canvas while the page is visible to reduce rendering work."
+      },
+      "trust": {
+        "label": "Page trust",
+        "hint": "Strict isolates the page from Foundry. Trusted removes the iframe sandbox completely.",
+        "strict": "Strict sandbox",
+        "trusted": "Trusted (no sandbox)"
+      },
+      "stacking": {
+        "label": "Foundry interface",
+        "hint": "Keep the Foundry controls above the page, or let the page cover them while leaving windows accessible.",
+        "below": "Controls above page",
+        "above": "Page above controls"
+      },
+      "interactive": {
+        "label": "Interactive",
+        "hint": "When disabled, pointer input passes through the page to the Foundry canvas."
+      },
+      "audience": {
+        "label": "Audience",
+        "hint": "Choose which connected users see the page.",
+        "all": "Everyone",
+        "gm": "Game Masters only",
+        "players": "Players only"
+      }
     },
-    "settings": {
-      "allowedOrigins": { "name": "Allowed origins", "hint": "" },
-      "sandbox": { "name": "Iframe sandbox", "hint": "" },
-      "zIndex": { "name": "Overlay z-index", "hint": "" },
-      "debug": { "name": "Debug logging", "hint": "" }
+    "trust": {
+      "confirmTitle": "Trust this page?",
+      "confirmContent": "Trusted pages are not sandboxed. A same-origin page can access your Foundry session and the surrounding page. Only continue for HTML you control."
     },
-    "context": {
-      "reload": "Reload embedded page"
-    },
-    "keybindings": {
-      "toggle": { "name": "Hide/show the overlay" }
+    "validation": {
+      "invalidUrl": "This is not a valid HTTP(S) URL.",
+      "mixedContent": "This HTTP page will be blocked when Foundry is served over HTTPS. Use HTTPS instead.",
+      "localMissing": "Foundry could not find this local path (HTTP {status}). You may still save it, but the page will not load.",
+      "localUnreachable": "Foundry could not check this local path. You may still save it, but verify the path before using the scene."
     },
     "notifications": {
-      "invalidUrl": "That is not a valid URL."
+      "localLoadFailed": "HTML as Scene could not load the local page: {url}",
+      "loadTimeout": "The page did not finish loading: {url}. It may be unavailable or may forbid iframe embedding through X-Frame-Options or Content-Security-Policy."
     }
   }
 }

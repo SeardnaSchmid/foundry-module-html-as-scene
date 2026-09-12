@@ -1,0 +1,169 @@
+import {
+  CSS_CLASSES,
+  DOM_IDS,
+  HOOKS,
+  I18N,
+  LOAD_TIMEOUT_MS,
+  MODULE_ID,
+  SANDBOX,
+  STACKING
+} from "./constants.mjs";
+
+function escapeAttribute(value) {
+  return value.replaceAll("&", "&amp;").replaceAll('"', "&quot;");
+}
+
+/** Add a base URL without disturbing an explicitly authored <base> element. */
+export function injectBaseHref(html, sourceUrl) {
+  if ( /<base\b/i.test(html) ) return html;
+
+  const baseUrl = new URL(".", new URL(sourceUrl, document.baseURI)).href;
+  const base = `<base href="${escapeAttribute(baseUrl)}">`;
+  if ( /<head(?:\s[^>]*)?>/i.test(html) ) {
+    return html.replace(/<head(?:\s[^>]*)?>/i, (head) => `${head}${base}`);
+  }
+
+  const doctype = html.match(/^\s*<!doctype[^>]*>/i);
+  if ( doctype ) {
+    const end = doctype.index + doctype[0].length;
+    return `${html.slice(0, end)}<head>${base}</head>${html.slice(end)}`;
+  }
+  return `<head>${base}</head>${html}`;
+}
+
+export class HtmlAsSceneOverlay extends foundry.applications.api.ApplicationV2 {
+  static DEFAULT_OPTIONS = {
+    id: DOM_IDS.OVERLAY,
+    classes: [CSS_CLASSES.OVERLAY],
+    tag: "div",
+    window: { frame: false, positioned: false }
+  };
+
+  #config = null;
+  #loadTimer = null;
+  #renderData = null;
+  #renderKey = null;
+  #request = 0;
+  #scene = null;
+
+  async show(config, scene) {
+    const request = ++this.#request;
+    const wasRendered = this.rendered;
+    const previousScene = this.#scene;
+    const changed = config.renderKey !== this.#renderKey;
+
+    if ( this.rendered && !changed ) {
+      this.#config = config;
+      this.#scene = scene;
+      this.#applyBodyState(config);
+      this.#applyElementState(config);
+      this.#emitSceneChange(previousScene, scene, config);
+      return this;
+    }
+
+    let html = null;
+    if ( !config.external ) {
+      try {
+        const response = await fetch(config.src, { credentials: "same-origin" });
+        if ( !response.ok ) throw new Error(`${response.status} ${response.statusText}`);
+        html = injectBaseHref(await response.text(), config.src);
+      } catch (error) {
+        if ( request !== this.#request ) return this;
+        console.error(`${MODULE_ID} | Failed to load local HTML from ${config.src}.`, error);
+        if ( game.user.isGM ) {
+          ui.notifications.error(game.i18n.format(I18N.LOCAL_LOAD_FAILED, { url: config.url }));
+        }
+        await this.hide();
+        return this;
+      }
+    }
+
+    if ( request !== this.#request ) return this;
+    this.#config = config;
+    this.#renderData = { config, html };
+    this.#scene = scene;
+    this.#applyBodyState(config);
+    await this.render({ force: true });
+    if ( request !== this.#request ) return this;
+    this.#renderKey = config.renderKey;
+    if ( !wasRendered || previousScene?.id !== scene?.id ) this.#emitSceneChange(previousScene, scene, config);
+    return this;
+  }
+
+  async hide() {
+    const request = ++this.#request;
+    this.#clearLoadTimer();
+    document.body.classList.remove(CSS_CLASSES.ACTIVE);
+    document.getElementById(DOM_IDS.BOARD)?.classList.remove(CSS_CLASSES.BOARD_HIDDEN);
+
+    const scene = this.#scene;
+    const wasVisible = Boolean(this.#config);
+    this.#config = null;
+    this.#renderKey = null;
+    this.#scene = null;
+    if ( wasVisible ) Hooks.callAll(HOOKS.HIDDEN, this, scene);
+    await this.close({ animate: false });
+    if ( request === this.#request ) {
+      this.#clearLoadTimer();
+      this.#renderData = null;
+    }
+    return this;
+  }
+
+  _renderHTML(_context, _options) {
+    const { config, html } = this.#renderData;
+    const iframe = document.createElement("iframe");
+    iframe.title = game.i18n.localize(I18N.OVERLAY_TITLE);
+    iframe.referrerPolicy = "no-referrer";
+
+    const sandbox = SANDBOX[config.trust];
+    if ( sandbox ) iframe.setAttribute("sandbox", sandbox);
+    if ( config.external ) iframe.src = config.src;
+    else iframe.srcdoc = html;
+
+    this.#clearLoadTimer();
+    const timer = window.setTimeout(() => {
+      if ( this.#loadTimer !== timer ) return;
+      this.#loadTimer = null;
+      if ( !game.user.isGM ) return;
+      ui.notifications.warn(game.i18n.format(I18N.LOAD_TIMEOUT, { url: config.url }), { permanent: true });
+    }, LOAD_TIMEOUT_MS);
+    this.#loadTimer = timer;
+    iframe.addEventListener("load", () => {
+      window.clearTimeout(timer);
+      if ( this.#loadTimer === timer ) this.#loadTimer = null;
+    }, { once: true });
+    return iframe;
+  }
+
+  _replaceHTML(iframe, content) {
+    content.replaceChildren(iframe);
+  }
+
+  _onRender(_context, _options) {
+    this.#applyElementState(this.#config);
+  }
+
+  #applyElementState(config) {
+    if ( !config || !this.element ) return;
+    this.element.classList.toggle(CSS_CLASSES.ABOVE_UI, config.stacking === STACKING.ABOVE);
+    this.element.classList.toggle(CSS_CLASSES.PASSIVE, !config.interactive);
+  }
+
+  #applyBodyState(config) {
+    document.body.classList.add(CSS_CLASSES.ACTIVE);
+    document.getElementById(DOM_IDS.BOARD)?.classList.toggle(CSS_CLASSES.BOARD_HIDDEN, config.hideBoard);
+  }
+
+  #emitSceneChange(previousScene, scene, config) {
+    if ( previousScene?.id === scene?.id ) return;
+    if ( previousScene ) Hooks.callAll(HOOKS.HIDDEN, this, previousScene);
+    Hooks.callAll(HOOKS.SHOWN, this, config, scene);
+  }
+
+  #clearLoadTimer() {
+    if ( this.#loadTimer === null ) return;
+    window.clearTimeout(this.#loadTimer);
+    this.#loadTimer = null;
+  }
+}

@@ -1,40 +1,34 @@
-/*
- * Layout skeleton for the overlay. Positioning is done in JS (the overlay is
- * glued to #board's bounding box), so this file only owns stacking,
- * pointer-events and the hidden/interactive states.
- *
- * SCAFFOLD — declarations are minimal on purpose; visual polish comes later.
- */
+@layer modules {
+  .html-as-scene-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    overflow: hidden;
+  }
 
-#html-as-scene-overlay {
-  position: fixed;
-  z-index: var(--has-z-index, 10);
-  overflow: hidden;
-  pointer-events: none; /* click-through unless the scene is interactive */
-}
+  .html-as-scene-overlay.above-ui {
+    z-index: 80;
+  }
 
-#html-as-scene-overlay.is-interactive {
-  pointer-events: auto;
-}
+  .html-as-scene-overlay.passive {
+    pointer-events: none;
+  }
 
-#html-as-scene-overlay.is-hidden {
-  display: none;
-}
+  .html-as-scene-overlay iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--color-cool-5, #1c1c25);
+  }
 
-#html-as-scene-frame {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
-  background: transparent;
-}
+  .html-as-scene-board-hidden {
+    /* Foundry writes display: block inline while initializing the canvas. */
+    display: none !important;
+  }
 
-/* Set on <body> while an overlay is up. */
-body.html-as-scene-active {
-  /* TODO: dim or disable canvas-only controls that make no sense here. */
-}
-
-/* Set when the scene asks for the canvas to be covered completely. */
-body.html-as-scene-hide-canvas #board {
-  /* TODO: visibility/filter treatment for the hidden canvas. */
+  .html-as-scene-config [data-url-validation] {
+    margin-block-start: 0.5rem;
+    padding: 0.5rem;
+  }
 }

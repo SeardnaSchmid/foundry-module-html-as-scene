@@ -1,19 +1,74 @@
-{{!--
-  Scene sheet tab. Field names are plain scene flags so the form submits
-  through Foundry's normal SceneConfig update without extra handling.
+<div class="tab scrollable html-as-scene-config{{#if tab.active}} active{{/if}}"
+     data-group="{{tab.group}}" data-tab="{{tab.id}}">
+  <fieldset>
+    <legend>{{localize "html-as-scene.sceneConfig.legend"}}</legend>
 
-  SCAFFOLD — markup outline; classes/structure follow Foundry's sheet styling.
---}}
-<div class="tab" data-tab="html-as-scene" data-group="main">
+    <div class="form-group">
+      <label>{{localize "html-as-scene.sceneConfig.enabled.label"}}</label>
+      <div class="form-fields">
+        <input type="checkbox" data-config-key="enabled" data-dtype="Boolean">
+      </div>
+      <p class="hint">{{localize "html-as-scene.sceneConfig.enabled.hint"}}</p>
+    </div>
 
-  {{!-- enabled: master switch for this scene --}}
-  {{!-- url: absolute URL or a path relative to the Foundry origin --}}
-  {{!-- interactive: whether clicks reach the page or fall through to the canvas --}}
-  {{!-- allowPlayers: show the overlay to non-GM users --}}
-  {{!-- hideCanvas: cover the canvas completely instead of layering over it --}}
+    <div class="form-group stacked">
+      <label>{{localize "html-as-scene.sceneConfig.url.label"}}</label>
+      <div class="form-fields">
+        <input type="text" data-config-key="url"
+               placeholder="modules/html-as-scene/dist/index.html">
+      </div>
+      <p class="hint">{{localize "html-as-scene.sceneConfig.url.hint"}}</p>
+      <p class="hint notification warning" data-url-validation hidden></p>
+    </div>
 
-  {{!-- TODO: form-group per flag, name="flags.html-as-scene.<key>" --}}
-  {{!-- TODO: notes paragraph explaining relative paths, e.g.
-             modules/html-as-scene/dist/index.html --}}
+    <div class="form-group">
+      <label>{{localize "html-as-scene.sceneConfig.hideBoard.label"}}</label>
+      <div class="form-fields">
+        <input type="checkbox" data-config-key="hideBoard" data-dtype="Boolean">
+      </div>
+      <p class="hint">{{localize "html-as-scene.sceneConfig.hideBoard.hint"}}</p>
+    </div>
 
+    <div class="form-group">
+      <label>{{localize "html-as-scene.sceneConfig.trust.label"}}</label>
+      <div class="form-fields">
+        <select data-config-key="trust">
+          <option value="strict">{{localize "html-as-scene.sceneConfig.trust.strict"}}</option>
+          <option value="trusted">{{localize "html-as-scene.sceneConfig.trust.trusted"}}</option>
+        </select>
+      </div>
+      <p class="hint">{{localize "html-as-scene.sceneConfig.trust.hint"}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "html-as-scene.sceneConfig.stacking.label"}}</label>
+      <div class="form-fields">
+        <select data-config-key="stacking">
+          <option value="below">{{localize "html-as-scene.sceneConfig.stacking.below"}}</option>
+          <option value="above">{{localize "html-as-scene.sceneConfig.stacking.above"}}</option>
+        </select>
+      </div>
+      <p class="hint">{{localize "html-as-scene.sceneConfig.stacking.hint"}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "html-as-scene.sceneConfig.interactive.label"}}</label>
+      <div class="form-fields">
+        <input type="checkbox" data-config-key="interactive" data-dtype="Boolean">
+      </div>
+      <p class="hint">{{localize "html-as-scene.sceneConfig.interactive.hint"}}</p>
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "html-as-scene.sceneConfig.audience.label"}}</label>
+      <div class="form-fields">
+        <select data-config-key="audience">
+          <option value="all">{{localize "html-as-scene.sceneConfig.audience.all"}}</option>
+          <option value="gm">{{localize "html-as-scene.sceneConfig.audience.gm"}}</option>
+          <option value="players">{{localize "html-as-scene.sceneConfig.audience.players"}}</option>
+        </select>
+      </div>
+      <p class="hint">{{localize "html-as-scene.sceneConfig.audience.hint"}}</p>
+    </div>
+  </fieldset>
 </div>
