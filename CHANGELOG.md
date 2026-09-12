@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/compare/v0.2.0...v0.2.1) (2026-09-12)
+
+
+### Bug Fixes
+
+* keep Foundry controls accessible ([6742d29](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/commit/6742d292acc56d634f75d5196b76699ff83163dc))
+
 # [0.2.0](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/compare/v0.1.0...v0.2.0) (2026-09-12)
 
 
