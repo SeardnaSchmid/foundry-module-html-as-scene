@@ -1,5 +1,17 @@
 # Changelog
 
+# 0.1.0 (2026-09-12)
+
+
+### Bug Fixes
+
+* avoid duplicate release version bump ([3474661](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/commit/3474661e4dde04b64d3e098455c861dd2c0712c7))
+
+
+### Features
+
+* implement HTML scene webviews ([05e43c7](https://github.com/SeardnaSchmid/foundry-module-html-as-scene/commit/05e43c7cd82914b09243007b773c8156c5e9bcb0))
+
 ## [Unreleased]
 - Vollständige Szenen-Webansicht mit v14-Szenenreiter, Zielgruppen,
   Stapelung, Pointer-Modus, Canvas-Abschaltung und Lifecycle für Canvas- sowie
