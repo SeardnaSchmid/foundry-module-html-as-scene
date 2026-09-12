@@ -13,9 +13,7 @@
   "github": {
     "release": false
   },
-  "npm": {
-    "publish": false
-  },
+  "npm": false,
   "plugins": {
     "@release-it/bumper": {
       "out": [
